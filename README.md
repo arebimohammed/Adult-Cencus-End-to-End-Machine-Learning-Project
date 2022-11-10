@@ -56,8 +56,8 @@ This docker image is then pushed to Azure Container Registry, I chose Azure over
 account from my university. I mainly used the Azure Command-Line Interface to accomplish the cloud deployment. 
 
 * I firstly have to login uzing ```az login```
-* Then I created an Azure container registry (acr) using ```az group create --name <aNameOfYourChoice> --location eastus``` choosing a location from ```az account list-locations```
-* Then created an Azure container registry using ```az acr create --resource-group <nameOfResourceGroup> --name <acrName> --sku Basic```
+* Then I created a resource group using ```az group create --name <aNameOfYourChoice> --location eastus``` choosing a location from ```az account list-locations```
+* Then created an Azure container registry (acr) using ```az acr create --resource-group <nameOfResourceGroup> --name <acrName> --sku Basic```
 * Then I logged in to the container registry using ```az acr login --name <acrName>```
 * Then I tagged the container image using full name of the registry's login server which is found by ``` az acr show --name <acrName> --query loginServer --output table```
 and we tag it like so: ```docker tag <dockerImageNameWithTag> <acrLoginServer>/<aNameOfYourChoice>```
