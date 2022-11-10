@@ -5,9 +5,9 @@ preprocessing, training, deployment and streamlit app of the Adult Census Income
 This project is a mid-term project and is in partial fulfillment for the [mlbookcamp](https://datatalks.club/courses/2021-winter-ml-zoomcamp.html) course.  
 
 # Table of Contents  
-* [Description of the problem](#description-of-the-problem)
-* [Project Architecture](#project-architecture)
-* [Model Deployment and Instructions](#model-deployment-and-instructions)
+* [Description of the problem](#description of the problem)
+* [Project Architecture](#project architecture)
+* [Model Deployment and Instructions](#model deployment and instructions)
 
 
 ## **Description of the problem :open_book:**
@@ -42,7 +42,7 @@ provided can produce insights on an individuls income and predict their income b
 ```
 
 
-## ** Model Deployment and Instructions :rocket:**
+## **Model Deployment and Instructions :rocket:**
 
 The model is deployed using [BentoML](https://www.bentoml.com/). The main script that is deployed is the predict.py. BentoML creates a bento from the 
 predict.py and the bentofile.yaml files using ```bentoml build```. This bento is then containerized to a docker image using ```bentoml containerize```
