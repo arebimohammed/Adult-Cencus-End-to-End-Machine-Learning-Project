@@ -5,9 +5,10 @@ preprocessing, training, deployment and streamlit app of the Adult Census Income
 This project is a mid-term project and is in partial fulfillment for the [mlbookcamp](https://datatalks.club/courses/2021-winter-ml-zoomcamp.html) course.  
 
 # Table of Contents  
-* [Description of the problem](#description of the problem)
-* [Project Architecture](#project architecture)
-* [Model Deployment and Instructions](#model deployment and instructions)
+* [Description of the problem](#description-of-the-problem-open_book)
+* [Project Architecture](#project-architecture-triangular_ruler)
+* [Model Deployment and Instructions](#model-deployment-and-instructions-rocket)
+* [Streamlit App](#streamlit-app)
 
 
 ## **Description of the problem :open_book:**
@@ -16,6 +17,9 @@ The aim of the project based on census data, is to predict if an individuals ann
 the "Adult Census Income" dataset, which is very popular in the UCI Machine Learnig repository that can be found [here](https://archive.ics.uci.edu/ml/datasets/adult)
 as well as in the data folder described in the [project architecture](#) below. Even though the census data is pretty outdated (1994), the solution
 provided can produce insights on an individuls income and predict their income bracket.
+
+
+Note that all the conclusions (statements) and results for the EDA, feature extraction/selection, hyperparamter tuning, preprocesing and model selection are discussed and viewed in the notebook.ipynb file and not in this README. 
 
 
 ## **Project architecture: :triangular_ruler:**
@@ -38,6 +42,8 @@ provided can produce insights on an individuls income and predict their income b
 │
 ├── predict.py                <- This is the Python script that loads the saved model and preprocessing transformer, creates the BentoML service and serves the API to finally make the prediction and return it
 │
+├── requirements.txt          <- This is a text file for the dependencies for the Streamlit App. NOT THE MODEL DEPLOYMENT!
+│
 └── streamlit_app.py          <- This is the Python script that creates the streamlit which calls the model API, which is deployed on an Azure Container Instance and finally previews the final prediction in a user-friendly way
 ```
 
@@ -58,5 +64,15 @@ and we tag it like so: ```docker tag <dockerImageNameWithTag> <acrLoginServer>/<
 * Then I pushed the image to Azure Container Registry using ```docker push <acrLoginServer>/<endpointChosenAbove> ```. The image is now pushed after several minutes (it is 1.39GB)
 * Then I deployed the container. First I need the registry credentials, I got them with ```az acr credential show --name <acrName>```, or in the Azure dashboard online.
 Then I deploy the container with ```az container create --resource-group <nameOfResourceGroup> --name <nameOfContainer> --image <acrLoginServer>/<endpointChosenAbove> --cpu 1 --memory 1 --registry-login-server <acrLoginServer> --registry-username <service-principal-ID> --registry-password <service-principal-password> --ip-address Public --dns-name-label <aciDnsLabel> --ports <bentoMLPort>```
-* Then we can get the fully qualified domain name using ```az container show --resource-group <nameOfResourceGroup> --name <nameOfContainer> --query ipAddress.fqdn```
+* Then we can get the fully qualified domain name using ```az container show --resource-group <nameOfResourceGroup> --name <nameOfContainer> --query ipAddress.fqdn```. We can then use this to send requests along with the port and endpoint specified to get the model predictions (as I did in the Streamlit App).
+
+
+## **Streamlit App**
+
+The Streamlit app is deployed [here](https://arebimohammed-adult-cencus-end-to-end-mach-streamlit-app-ob4fed.streamlit.app/) using Streamlit's deployment option. See demo below.
+
+
+
+
+https://user-images.githubusercontent.com/69222371/200983552-d21cba5f-662f-4f96-b86c-b3d1d4616aff.mp4
 
