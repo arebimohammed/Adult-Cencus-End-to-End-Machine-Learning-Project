@@ -5,11 +5,11 @@ preprocessing, training, deployment and streamlit app of the Adult Census Income
 This project is a mid-term project and is in partial fulfillment for the [mlbookcamp](https://datatalks.club/courses/2021-winter-ml-zoomcamp.html) course.  
 
 # Table of Contents  
-* [Description of the problem](#description)
-* [Project Architecture](#architecture)
-* [Model Deployment and Instructions](#deployment)
+* [Description of the problem](#description-of-the-problem)
+* [Project Architecture](#project-architecture)
+* [Model Deployment and Instructions](#model-deployment-and-instructions)
 
-<a name="description"/>
+
 ## **Description of the problem :open_book:**
 
 The aim of the project based on census data, is to predict if an individuals annual income exceeds $50,000 or not. The dataset used is referred to as 
@@ -17,7 +17,7 @@ the "Adult Census Income" dataset, which is very popular in the UCI Machine Lear
 as well as in the data folder described in the [project architecture](#) below. Even though the census data is pretty outdated (1994), the solution
 provided can produce insights on an individuls income and predict their income bracket.
 
-<a name="architecture"/>
+
 ## **Project architecture: :triangular_ruler:**
 
 ```
@@ -41,7 +41,7 @@ provided can produce insights on an individuls income and predict their income b
 └── streamlit_app.py          <- This is the Python script that creates the streamlit which calls the model API, which is deployed on an Azure Container Instance and finally previews the final prediction in a user-friendly way
 ```
 
-<a name="deployment"/>
+
 ## ** Model Deployment and Instructions :rocket:**
 
 The model is deployed using [BentoML](https://www.bentoml.com/). The main script that is deployed is the predict.py. BentoML creates a bento from the 
@@ -51,11 +51,12 @@ account from my university. I mainly used the Azure Command-Line Interface to ac
 
 * I firstly have to login uzing ```az login```
 * Then I created an Azure container registry (acr) using ```az group create --name <aNameOfYourChoice> --location eastus``` choosing a location from ```az account list-locations```
-* Then created an Azure container registry using ```az acr create --resource-group <aNameOfYourChoice> --name <acrName> --sku Basic```
+* Then created an Azure container registry using ```az acr create --resource-group <nameOfResourceGroup> --name <acrName> --sku Basic```
 * Then I logged in to the container registry using ```az acr login --name <acrName>```
 * Then I tagged the container image using full name of the registry's login server which is found by ``` az acr show --name <acrName> --query loginServer --output table```
 and we tag it like so: ```docker tag <dockerImageNameWithTag> <acrLoginServer>/<aNameOfYourChoice>```
-* Then I pushed the image to Azure Container Registry using ```docker push <acrLoginServer>/<aNameOfYourChoice> ```. The image is now pushed after several minutes (it is 1.39GB)
+* Then I pushed the image to Azure Container Registry using ```docker push <acrLoginServer>/<endpointChosenAbove> ```. The image is now pushed after several minutes (it is 1.39GB)
 * Then I deployed the container. First I need the registry credentials, I got them with ```az acr credential show --name <acrName>```, or in the Azure dashboard online.
-Then I deploy the container with ```az container create --resource-group <aNameOfYourChoice> --name <aNameOfYourChoice> --image <acrLoginServer>/<aNameOfYourChoice> --cpu 1 --memory 1 --registry-login-server <acrLoginServer> --registry-username <service-principal-ID> --registry-password <service-principal-password> --ip-address Public --dns-name-label <aciDnsLabel> --ports <bentoMLPort>```
+Then I deploy the container with ```az container create --resource-group <nameOfResourceGroup> --name <nameOfContainer> --image <acrLoginServer>/<endpointChosenAbove> --cpu 1 --memory 1 --registry-login-server <acrLoginServer> --registry-username <service-principal-ID> --registry-password <service-principal-password> --ip-address Public --dns-name-label <aciDnsLabel> --ports <bentoMLPort>```
+* Then we can get the fully qualified domain name using ```az container show --resource-group <nameOfResourceGroup> --name <nameOfContainer> --query ipAddress.fqdn```
 
