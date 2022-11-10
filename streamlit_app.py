@@ -113,7 +113,7 @@ def main():
         **Author: Mohammed Arebi ([GitHub](https://github.com/arebimohammed))**
         
         You can see the steps of building the model, evaluating it, and cleaning the data itself
-        on my GitHub repo [here](). 
+        on my GitHub repo [here](https://github.com/arebimohammed/Adult-Cencus-End-to-End-Machine-Learning-Project). 
         """)
 
     adult = load_dataset()
